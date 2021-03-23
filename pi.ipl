@@ -1,0 +1,14 @@
+# A program in ipl to approximately calculate the value of pi
+# The main purpose of this program is to show some expressions that use negative and decimal constants
+i = 1.0
+p = 1
+t = 1
+sum = 0.0
+ratio = 1.0
+while ratio > 0.0006
+	ratio = 1 / i
+	sum = sum + p * ratio
+	i = i + 2
+	p = -1 * p
+	t = t + 1
+writeln sum * 4

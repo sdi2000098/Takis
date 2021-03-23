@@ -1,0 +1,206 @@
+# Solution of first assignment in ipl
+# Once an interesting semiprime is found, it will be printed immediately
+# All interesting semiprimes are printed before 666666666
+# 666666666 indicates that all numbers between minum and maxnum have been checked
+# After 666666666 the program prints the number of k-almost primes and then the number of semiprimes
+# This version of kalmpr is not using the extensions of the program, so it is a bit complicated
+# There is also another version of kalmpr ( kalmpr2) that uses these extensions, which is way easier to understand
+
+###############################################################################################
+
+minum = 100
+maxnum = 1000
+maxk = 4
+countk = 0
+count2 = 0
+current = minum
+while current <= maxnum
+	semiprime1 = 0
+	semiprime2 = 0
+	factors = 0
+	temp = current
+	test = temp % 2
+	condition = 1
+	if test != 0
+		condition = 0
+	while condition == 1
+		temp = temp / 2
+		factors = factors + 1
+		if semiprime1 == 0
+			semiprime1 = 2
+		else
+			if semiprime2 == 0
+				semiprime2 = 2
+		test = temp % 2
+		if test != 0
+			condition = 0
+	test = temp % 3
+	condition = 1
+	if test != 0
+		condition = 0
+	while condition == 1
+		temp = temp / 3
+		factors = factors + 1
+		if semiprime1 == 0
+			semiprime1 = 3
+		else
+			if semiprime2 == 0
+				semiprime2 = 3
+		test = temp % 3
+		if test != 0
+			condition = 0
+	condition = 1
+	if temp == 1
+		condition = 0
+	if factors >= maxk
+		condition = 0
+	possible_prime = 5
+	test = possible_prime * possible_prime
+	if test > temp
+		condition = 0
+	while condition == 1
+		condition2 = temp % possible_prime
+		if condition2 == 0
+			prime = 1
+			divisor = 5
+			condition3 = 1
+			test = divisor * divisor
+			if test > possible_prime
+				condition3 = 0
+			while condition3 == 1
+				condition4 = 0
+				test = possible_prime % divisor
+				if test == 0
+					condition4 = 1
+				test2 = divisor + 2
+				test = possible_prime % test2
+				if test == 0
+					condition4 = 1
+				if condition4 == 1
+					prime = 0
+				divisor = divisor + 6
+				if prime != 1
+					condition3 = 0
+				test = divisor * divisor
+				if test > possible_prime
+					condition3 = 0
+			if prime == 1
+				test = temp % possible_prime
+				while test == 0
+					temp = temp / possible_prime
+					factors = factors + 1
+					if semiprime1 == 0
+						semiprime1 = possible_prime
+					else
+						if semiprime2 == 0
+							semiprime2 = possible_prime
+					test = temp % possible_prime
+					if test != 0
+						condtion3 = 0
+		condition2 = 1
+		if temp == 1
+			condition2 = 0
+		if factors >= maxk
+			condition2 = 0
+		test2 = possible_prime + 2
+		test = temp % test2
+		if test != 0
+			condition2 = 0
+		if condition2 == 1
+			prime_2 = 1
+			divisor = 5
+			test2 = possible_prime + 2
+			test = divisor * divisor
+			condition2 = 1
+			if test > test2
+				condition2 = 0
+			while condition2 == 1
+				condition3 = 1
+				test = possible_prime + 2
+				test2 = test % divisor
+				if test2 != 0
+					condition3 = 0
+				test2 = divisor + 2
+				test3 = test % test2
+				if test3 != 0
+					condition3 = 0
+				if condition3 == 1
+					prime_2 = 0
+				divisor = divisor + 6
+				if prime_2 != 1
+					condition2 = 0
+				test = divisor * divisor
+				test2 = possible_prime + 2
+				if test > test2
+					condition2 = 0
+			if prime_2 == 1
+				test2 = possible_prime + 2
+				test = temp % test2
+				condition2 = 1
+				if test != 0
+					condition2 = 0
+				while condition2 == 1
+					test = possible_prime + 2
+					temp = temp / test
+					factors = factors + 1
+					if semiprime1 == 0
+						semiprime1 = test
+					else
+						if semiprime2 == 0
+							semiprime2 = test
+					test2 = temp % test
+					if test2 != 0
+						condition2 = 0
+		possible_prime = possible_prime + 6
+		if temp == 1
+			condition = 0
+		if factors >= maxk
+			condition = 0
+		test = possible_prime * possible_prime
+		if test > temp
+			condition = 0
+	condition = 1
+	if temp == 1
+		condition = 0
+	if factors >= maxk
+		condition = 0
+	if condition == 1
+		factors = factors + 1
+		if semiprime1 == 0
+			semiprime1 = temp
+		else
+			if semiprime2 == 0
+				semiprime2 = temp
+		temp = 1
+	condition = 1
+	if factors != 2
+		condition = 0
+	if temp != 1
+		condition = 0
+	if condition == 1
+		count2 = count2 + 1
+		countk = countk + 1
+		condition2 = 1
+		if semiprime1 == semiprime2
+			condition2 = 0
+		test = 100 * semiprime1
+		test2 = 99 * semiprime2
+		if test <= test2
+			condition2 = 0
+		if condition2 == 1
+			writeln current
+	if condition == 0
+		condition2 = 1
+		if factors > maxk
+			condition2 = 0
+		if factors < 2
+			condition2 = 0
+		if temp != 1
+			condition2 = 0
+		if condition2 == 1
+			countk = countk + 1
+	current = current + 1
+writeln 666666666
+write countk
+writeln count2
+
