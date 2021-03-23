@@ -1,0 +1,14 @@
+# This is a program that shows off the use of array elements as array indexes
+# There are 10 people participating in a lottery
+# Each person gets a lottery ticket from 0 to 99
+# Each lottery ticket corresponds to an amount of money that the person won
+new a[10]
+for i from 0 to 9 step 1
+	random a[i]			
+	a[i] = a[i] % 100 + 1		# Randomly each person gets a ticket
+new b[100]
+seed 100
+for i from 0 to 99 step 1
+	random b[i]			# Random amounts of money for each of the 100 lottery tickets
+for i from 0 to 9 step 1
+	writeln "The person " i + 1 " won " b[a[i]] " euros "		

@@ -1,0 +1,136 @@
+# This is a program that solves the problem of the first assignment
+# The main purpose of this program is demonstrate some of the extensions
+
+####################################################################
+
+
+write "Insert MINUM:\n"
+read minum
+write "Insert MAXNUM:\n"
+read maxnum
+write "Insert k:\n"
+read maxk
+write "Checking numbers in [" minum "," maxnum "] :\n"
+for current from minum to maxnum step 1
+	semiprime1 = 0				# Two variables to store the first two prime factors
+	semiprime2 = 0
+	factors = 0
+	temp = current
+	while temp % 2 == 0			# Factorize by 2 as many times as possbile 
+		temp = temp / 2
+		factors = factors + 1
+		if semiprime1 == 0
+			semiprime1 = 2
+		else
+			if semiprime2 == 0
+				semiprime2 = 2
+	while temp % 3 == 0			# Factorize by 3 as many times as possbile
+		temp = temp / 3
+		factors = factors + 1
+		if semiprime1 == 0
+			semiprime1 = 3
+		else
+			if semiprime2 == 0
+				semiprime2 = 3
+	possible_prime = 5
+	while temp != 1 && factors < maxk && possible_prime * possible_prime <= temp		# Number not fully factorized, we have not exceeded the limit of factors and there, searching up to the square root of the number
+		if temp % possible_prime == 0							# Continue only if the possible_prime is a factor of the number
+			prime = 1
+			divisor = 6
+			while prime == 1 && divisor * divisor <= possible_prime			# Check if possible_prime is indeed a prime number
+				if possible_prime % divisor == 0 || possible_prime % ( divisor + 2 ) == 0
+					prime = 0
+				divisor = divisor + 6
+			if prime == 1
+				while temp % possible_prime == 0				# Factorize by the prime number as many times as possible
+					temp = temp / possible_prime
+					factors = factors + 1
+					if semiprime1 == 0 
+						semiprime1 = possible_prime
+					else
+						if semiprime2 == 0 
+							semiprime2 = possible_prime
+		if temp != 1 && factors < maxk && temp % ( possible_prime + 2 )  == 0		# Same procedure for possible_prime + 2
+			prime_2 = 1
+			divisor = 5
+			while prime_2 == 1 && divisor * divisor <= possible_prime + 2
+				if ( possible_prime + 2 ) % divisor == 0 || ( possible_prime + 2 ) % ( divisor + 2 ) == 0
+					prime_2 = 0
+				divisor = divisor + 6
+			if prime_2 == 1
+				while temp % ( possible_prime + 2 ) == 0
+					temp = temp / ( possible_prime + 2 )
+					factors = factors + 1
+					if semiprime1 == 0
+						semiprime1 = possible_prime + 2
+					else
+						if semiprime2 == 0
+							semiprime2 = possible_prime + 2
+		possible_prime = possible_prime + 6						# Go for the next pair of possible_primes
+	if temp != 1 && factors < maxk					# Means that temp is a prime number since we foun no factor searching up to the square root
+		factors = factors + 1
+		if semiprime1 == 0 
+			semiprime1 = temp
+		else
+			if semiprime2 == 0 
+				semiprime2 = temp
+		temp = 1
+	if factors == 2 && temp == 1					# Factorization completed and found just 2 prime numbers as factors
+		count2 = count2 + 1
+		countk = countk + 1
+		if semiprime1 != semiprime2 && semiprime1 > semiprime2 - semiprime2 * 0.01
+			writeln semiprime1 " * " semiprime2 " = " current " is an interesting semiprime "
+	else								
+		if factors <= maxk && factors >= 2 && temp == 1		# Factorization completed and found more than 2 prime numbers 
+			countk = countk + 1
+writeln "Found " countk " k-almost prime numbers ( 2 <= k <= " maxk " )\n Found " count2 " semiprimes"
+
+##########################################################################################################################################
+
+#Starting the second part
+
+seed 1000					
+writeln "Insert COMPUTATIONS: "
+read computations
+for i from 1 to computations step 1
+	random y
+	random z
+	x = ( y % 32768 + 1 ) * ( z % 32768 + 1 ) + 1
+	temp = x
+	factors = 0
+	while temp % 2 == 0			# Factorize by 2
+		temp = temp / 2
+		factors = factors + 1
+	while temp % 3 == 0			# Factorize by 3
+		temp = temp / 3
+		factors = factors + 1
+	possible_prime = 5
+	while temp != 1 && possible_prime * possible_prime <= temp		# Until factorization is completed
+		if temp % possible_prime == 0					# Check for possible_prime as factor
+			prime = 1
+			divisor = 5
+			while prime == 1 && divisor * divisor <= possible_prime
+				if possible_prime % divisor == 0 || possible_prime % ( divisor + 2 ) == 0
+					prime = 0
+				divisor = divisor + 6
+			if prime == 1
+				while temp % possible_prime == 0
+					temp = temp / possible_prime
+					factors = factors + 1
+		
+		if temp != 1 && temp % ( possible_prime + 2 ) == 0		# Check for possible_prime + 2
+			prime_2 = 1
+			divisor = 5
+			while prime_2 == 1 && divisor * divisor <= possible_prime + 2
+				if ( possible_prime + 2 ) % divisor == 0 || ( possible_prime + 2 ) % ( divisor + 2 ) == 0
+					prime_2 = 0
+				divisor = divisor + 6
+			if prime_2 == 1
+				while temp % ( possible_prime + 2 ) == 0
+					temp = temp / ( possible_prime + 2 )
+					factors = factors + 1
+		possible_prime = possible_prime + 6				# Go for next pair
+	if temp != 1			# Temp is a prime number 
+		factors = factors + 1
+	writeln x " is a " factors "-almost prime number"
+writeln "Checked " computations " numbers"
