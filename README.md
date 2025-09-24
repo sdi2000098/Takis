@@ -1,3 +1,3 @@
-# KyrtiosTakis
-Ergasies 1o eksamhno kyriou takh
-Oles oi ergasies tou kyriou takh me paradeigmata
+# Takis
+Ergasies 1o eksamhno takh
+Oles oi ergasies tou takh me paradeigmata
